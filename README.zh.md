@@ -15,6 +15,9 @@
 > 上游：superpowers v6.3.0，commit `b36e0829`（MIT）。技能内容与上游逐字节
 > 一致，仅有两处 DSH 适配，见 [UPSTREAM.md](UPSTREAM.md)。
 
+**代价：** 引导段实测约 3.9 KB（`≈4 KB`），会进入每次请求的系统提示；14 个
+技能还会让技能目录多 14 项。关闭组合包后，新会话两者都不再出现。
+
 ## 安装
 
 要求：支持 bundle 的 DSH 版本（实测 `0.2.2-rc.3`），以及桌面端或 `dsh` CLI。
@@ -25,10 +28,16 @@
 
 1. 打开侧边栏 **Plugins**；
 2. 点 **Add plugin**，或箭头 → **Install a third-party plugin**；
-3. 粘贴下面的 git 地址，安装并启用；
+3. 粘贴 `github:firekula/dsh-superpowers`（加 `#<40位commit>` 可锁定版本），
+   安装并启用；
 4. 新开会话（或重启应用）后按“验证是否生效”检查。
 
+桌面端的 profile 由应用独占管理，请用 **Plugins** 页面操作，不要用
+`dsh plugin --profile desktop`（CLI 会直接拒绝该 profile）。
+
 ### CLI
+
+适用于应用不独占的 profile（例如 `web`、`cli`）：
 
 ```sh
 # main 最新
@@ -42,14 +51,20 @@ dsh plugin --profile <profile> add github:firekula/dsh-superpowers#<40位commit>
 
 ```sh
 dsh plugin --profile <profile> add /absolute/path/to/dsh-superpowers
-dsh plugin --profile <profile> add ./dsh-superpowers-0.2.0.tgz
+dsh plugin --profile <profile> add ./dsh-superpowers-0.2.1.tgz
 ```
+
+> **不要用裸包名安装。** npm 上的 `dsh-superpowers` 是另一个项目，技能名和
+> 引导段名都相同，装错会重复挂载。请用上面的 git 地址；本仓库内的包名是
+> `@firekula/dsh-superpowers`。
 
 ### 更新与卸载
 
-- **更新**：按新 commit/tag 重装，或使用 Plugins 页的 **Update available**。
-- **卸载**：在 **Plugins** 页关闭/移除该组合包，或执行
-  `dsh plugin --profile <profile> remove dsh-superpowers`。
+- **卸载**：在 **Plugins** 页移除该组合包，或执行
+  `dsh plugin --profile <profile> remove @firekula/dsh-superpowers`。
+- **更新**：未锁 commit 的 git 安装（`github:owner/repo`）没有
+  **Update available** 入口；先卸载，再按新 commit/tag 重新添加。只有从 registry
+  按本包名安装、或 git 安装锁定完整 40 位 commit 时，才会出现版本/更新入口。
 - 关闭后，新会话不再注册这 14 个技能、也不再注入引导段；不会影响其他插件或
   profile 配置。
 
@@ -62,8 +77,10 @@ dsh plugin --profile <profile> add ./dsh-superpowers-0.2.0.tgz
 3. 让 agent 处理一个小需求，它应先加载 `brainstorming` 再写代码；
 4. 输入 `/brainstorming` 可直接显式调用该技能。
 
-`dsh --profile <profile> --dump-config` 能看到 `# == dsh-superpowers` 层和
-`superpowers` 行。
+CLI 管理的 profile 可以用 `dsh --profile <profile> --dump-config` 看到
+`# == dsh-superpowers` 层和 `superpowers` 行；桌面端会拒绝该命令
+（`managed exclusively by the Electron application`），改用上面的新会话检查，
+并在 **Plugins** 页确认卡片显示 `v0.2.1` 且处于运行中。
 
 ## 触发机制
 

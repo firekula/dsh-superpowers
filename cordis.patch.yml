@@ -4,4 +4,4 @@
 # node_modules), never a file:// URL or an absolute path.
 - insert:
     - id: superpowers
-      name: 'dsh-superpowers'
+      name: '@firekula/dsh-superpowers'

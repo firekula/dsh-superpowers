@@ -1,6 +1,6 @@
 {
-  "name": "dsh-superpowers",
-  "version": "0.2.0",
+  "name": "@firekula/dsh-superpowers",
+  "version": "0.2.1",
   "description": "Superpowers for DeepSeek Harness: registers the obra/superpowers skill library and injects the using-superpowers bootstrap into every session.",
   "type": "module",
   "main": "index.js",

@@ -20,6 +20,10 @@ The bundle does two things in every session of the profile that selects it:
 > content is byte-identical to upstream except for two small DSH adaptations
 > documented in [UPSTREAM.md](UPSTREAM.md).
 
+**Cost:** the bootstrap section measures about 3.9 KB (`≈4 KB`) of the system
+prompt on every request, and the 14 skills add 14 entries to the session skill
+catalog. Disabling the bundle removes both from new sessions.
+
 ## Install
 
 Requirements: a DSH build with bundle support (tested on `0.2.2-rc.3`), and
@@ -31,10 +35,17 @@ runtime dependencies and **no build step**, so pnpm's build-script approval
 
 1. Open **Plugins** in the Web sidebar.
 2. Click **Add plugin**, or the arrow → **Install a third-party plugin**.
-3. Paste the Git address below, then install and enable the bundle.
+3. Paste `github:firekula/dsh-superpowers` (append `#<40-char-commit>` to pin a
+   revision), then install and enable the bundle.
 4. Start a **new session** (or restart the app) and verify as described below.
 
+The Desktop profile is owned by the application: manage it from **Plugins**, not
+from `dsh plugin --profile desktop` (the CLI refuses that profile).
+
 ### CLI
+
+Use the CLI for profiles the application does not own (for example a `web` or
+`cli` profile):
 
 ```sh
 # latest main
@@ -49,16 +60,22 @@ development) and a packed tarball:
 
 ```sh
 dsh plugin --profile <profile> add /absolute/path/to/dsh-superpowers
-dsh plugin --profile <profile> add ./dsh-superpowers-0.2.0.tgz
+dsh plugin --profile <profile> add ./dsh-superpowers-0.2.1.tgz
 ```
+
+> **Do not install the bare npm name.** `dsh-superpowers` on the npm registry
+> belongs to a different project with the same skill names and bootstrap
+> section. Install from the Git address above; the package inside this
+> repository is `@firekula/dsh-superpowers`.
 
 ### Update and uninstall
 
-- **Update:** reinstall at a newer commit/tag, or use the **Update available**
-  action on the Plugins page. Registry installs update in place; Git installs
-  are replaced by their pinned spec.
-- **Uninstall:** disable or remove the bundle on the **Plugins** page, or run
-  `dsh plugin --profile <profile> remove dsh-superpowers`.
+- **Uninstall:** remove the bundle on the **Plugins** page, or run
+  `dsh plugin --profile <profile> remove @firekula/dsh-superpowers`.
+- **Update:** an unpinned Git install (`github:owner/repo`) has no **Update
+  available** action. Uninstall it, then add it again at the newer commit or
+  tag. A version/update section appears only for a registry install of this
+  package name, or for a Git install pinned to a full 40-character commit.
 - Disabling the bundle removes the 14 skills and the bootstrap from new
   sessions; it does not delete any other plugin or profile configuration.
 
@@ -72,8 +89,11 @@ In a **new session**:
    writing code.
 4. Type `/brainstorming` to invoke that skill explicitly in one step.
 
-`dsh --profile <profile> --dump-config` shows the `# == dsh-superpowers` layer
-and the `superpowers` row.
+For CLI-managed profiles, `dsh --profile <profile> --dump-config` shows the
+`# == dsh-superpowers` layer and the `superpowers` row. The Desktop profile
+refuses that command (`managed exclusively by the Electron application`); for
+Desktop, use the new-session checks above and confirm the bundle shows
+`v0.2.1` and is running on the **Plugins** page.
 
 ## What triggers what
 

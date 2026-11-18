@@ -1,6 +1,7 @@
 {
   "meta": {
-    "title": "Superpowers",
-    "description": "Registers the Superpowers skill library for every session — brainstorming, plan writing, subagent-driven development, TDD, systematic debugging, code review, and branch finishing — and injects a session-start bootstrap that tells the agent to load the relevant skill before acting. Adds about 3 KB to each request's system prompt and 14 entries to the session skill catalog. Turn the plugin off to remove both from new sessions."
+    "title": "Superpowers skills",
+    "description": "Adds 14 coding-workflow skills and a session bootstrap; costs about 4 KB per request and 14 catalog entries. The skills cover brainstorming, planning, subagent-driven development, TDD, systematic debugging and code review; the bootstrap tells the agent to load the right skill before acting. Turn it off to remove both from new sessions.",
+    "detail": "README.md"
   }
 }
