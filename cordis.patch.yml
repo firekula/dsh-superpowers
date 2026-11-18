@@ -1,0 +1,7 @@
+# dsh-superpowers bundle layer.
+# Applied when a profile lists this bundle in dsh.profile.bundles.
+# The row names the installed package (resolved from the profile's
+# node_modules), never a file:// URL or an absolute path.
+- insert:
+    - id: superpowers
+      name: 'dsh-superpowers'

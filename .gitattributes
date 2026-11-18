@@ -1,0 +1,5 @@
+# Keep the checkout byte-stable across platforms: the vendored skills include
+# POSIX shell scripts, and the bundle is installed straight from this repo.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf

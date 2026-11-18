@@ -1,0 +1,67 @@
+{
+  "name": "dsh-superpowers",
+  "version": "0.2.0",
+  "description": "Superpowers for DeepSeek Harness: registers the obra/superpowers skill library and injects the using-superpowers bootstrap into every session.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "index.js",
+    "lib/",
+    "skills/",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "adaptations/",
+    "scripts/",
+    "test/",
+    "README.md",
+    "README.zh.md",
+    "LICENSE",
+    "UPSTREAM.md"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "cordis",
+    "plugin",
+    "bundle",
+    "superpowers",
+    "skills",
+    "tdd",
+    "coding-agent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firekula/dsh-superpowers.git"
+  },
+  "homepage": "https://github.com/firekula/dsh-superpowers#readme",
+  "bugs": {
+    "url": "https://github.com/firekula/dsh-superpowers/issues"
+  },
+  "scripts": {
+    "test": "node test/bundle.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "upstream": {
+    "name": "obra/superpowers",
+    "repository": "https://github.com/obra/superpowers",
+    "version": "6.3.0",
+    "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+    "license": "MIT"
+  }
+}
